@@ -102,6 +102,9 @@
 			<h1><div class="d-inline-block font-italic" id="name"></div>   <div class="d-inline-block" id="suburb"></div></h1>
 			<p><div id="story"></div></p>
 			<div style="padding: 20px" id="soundcloud"></div>
+			<p>
+				<div class="d-inline-block font-italic text-muted" id="keyword1"></div>   <div class="d-inline-block font-italic text-muted" id="keyword2"></div>   <div class="d-inline-block font-italic text-muted" id="keyword3"></div>
+			</p>
 		</div>
 	</div>
 </div>
@@ -177,14 +180,18 @@
 			//var description = e.features[0].properties.description;
 			var suburb = e.features[0].properties.Suburb;
 			var name = e.features[0].properties.Name.concat(",  ");
+			var keyword1 = e.features[0].properties.Keyword_1.concat(",  ");
+			var keyword2 = e.features[0].properties.Keyword_2.concat(",  ");
 			
 			$('#name').text(name);
 			$('#suburb').text(e.features[0].properties.Suburb);
 			$('#story').text(e.features[0].properties.Story);
 			$('#soundcloud').html(e.features[0].properties.URL);
+			$('#keyword1').text(keyword1);
+			$('#keyword2').text(keyword2);
+			$('#keyword3').text(e.features[0].properties.Keyword_3);
 			
 			console.log(suburb);
-			console.log(soundcloud);
 
 			// Ensure that if the map is zoomed out such that multiple
 			// copies of the feature are visible, the popup appears
