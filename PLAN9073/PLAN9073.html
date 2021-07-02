@@ -1,0 +1,219 @@
+
+<html>
+<head>
+	<link rel="icon" type="image/jpg" href="images/icon.jpg" />
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<title>PLAN9073 Stories</title>
+	<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NHFRXF6');</script>
+<!-- End Google Tag Manager -->
+
+	<script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet'/>
+
+
+	<style>
+		#map {
+			height: 100%;
+			width: 100%;
+			left: 0px;
+			top: 0px;
+			background-color: transparent;
+			position: absolute;
+		}
+
+		.side-panel {
+			background-color: transparent;
+			
+			overflow: auto;
+			background-image: linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 30%);
+			background-image: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 30%);
+			background-image: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 30%);
+			background-image: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 30%);
+			background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.0001) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 30%);
+		}
+
+		#story{
+			font-style: italic;
+		}
+		
+		.legend {	
+			bottom: 50px;
+			position: absolute;
+			left: 20px;
+			z-index: 1;
+			background-color: rgba(255,255,255,0.5);
+
+		}
+
+		.legend div span {
+			border-radius: 50%;
+			display: inline-block;
+			height: 10px;
+			font-size: 9x;
+			width: 10px;
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NHFRXF6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<div class="jumbotron p-0 mb-0 bg-transparent">
+<div class="container-fluid">
+	<div class="row" style="height: 100%">
+		<div class="col-lg-9 mr-lg-n5 pr-0" style="min-height: 60%" >
+			<div id='map'></div>
+
+			
+
+		</div>
+		
+		<div class="col ml-lg-n5 side-panel" style="height:100%; overflow: auto;">
+			<h1 class="display-4 pt-3">Mapping PLAN9073 students and their favourite places</h1>
+			<p class="lead" style="font-size: 1.1rem;">Click on a coloured dot to reveal a personal story and photo PLAN9073 students' favourite locations.</p>
+			
+			
+			<p><div id="story"></div></p>
+			<div style="padding: 20px; max-width: 100%" id="image"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoibGF1cmVuY2V0cm95IiwiYSI6ImNpb2NkYTNhczA0YnF2Z2txeDYzZHpxZmcifQ.TyLvcnNlQmSy4ndZGEkCsw';
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/mapbox/light-v10',
+			center: [103.49, 1.37],
+			zoom: 2.3,
+			maxZoom: 13,
+			//scrollZoom: false,
+			customAttribution: "map by Laurence Troy"
+		});		
+
+		map.on('load', function() {
+		
+		map.addSource('PLAN9073_stories', {
+			type: 'vector',
+			url: 'mapbox://laurencetroy.ckqloczn807in21p10t3dplws-1q951'
+		});
+
+
+
+		//map.addSource('mapping_housing', {
+		//	type: 'geojson',
+		//	data: 'https://laurencetroy.github.io/housingaustralia/geojson/features.geojson'
+		//});
+
+
+		map.addLayer({
+			'id': 'housing',
+			'type': 'circle',
+			'source': 'PLAN9073_stories',
+			'source-layer': 'student_stories',
+			'paint': {
+			// make circles larger as the user zooms from z12 to z22
+			'circle-radius': {
+				'base': 5,
+				'stops': [[12, 5], [22, 180]]
+			},
+			// color circles by suburb, using a match expression
+			// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+			'circle-color': [
+			'match',
+			['get', 'Suburb'],
+			'Melbourne',
+			'#fbb03b',
+			'Erko',
+			'#e55e5e',
+			'Marrickv',
+			'#e55e5e',
+			'Redfern',
+			'#3bb2d0',
+			/* other */ '#e55e5e'
+			]
+			}
+		});
+
+		// Create a popup, but don't add it to the map yet.
+		var popup = new mapboxgl.Popup({
+			closeButton: false,
+			closeOnClick: true
+		});
+
+		map.on('click', 'housing', function(e) {
+			var coordinates = e.features[0].geometry.coordinates.slice();
+			var story = e.features[0].properties.Q4;
+			var image_url = e.features[0].properties.Image
+			
+			$('#story').text(e.features[0].properties.Q4);
+			$('#image').html(image_url);
+			
+			
+			//console.log(image_url);
+
+			// Ensure that if the map is zoomed out such that multiple
+			// copies of the feature are visible, the popup appears
+			// over the copy being pointed to.
+			while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+			coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+			}
+
+			//gets features in a different way
+			var features = map.queryRenderedFeatures(e.point);
+			
+		});
+
+		
+
+		map.on('mouseenter', 'housing', function() {
+			// Change the cursor style as a UI indicator.
+			map.getCanvas().style.cursor = 'pointer';
+		});
+
+		map.on('mouseleave', 'housing', function() {
+			map.getCanvas().style.cursor = '';
+		});
+
+		});
+
+		
+
+		// Add zoom and rotation controls to the map.
+		map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+		
+
+	</script>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>
