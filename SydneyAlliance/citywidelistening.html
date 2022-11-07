@@ -122,8 +122,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 		map.addSource('Citywide_Listening', {
 			type: 'vector',
-			url: 'mapbox://laurencetroy.cl9esfxs50mmt20o55t5nlyr4-4ak17'			
+			url: 'mapbox://laurencetroy.cla63tkkq0v4429qkn09s9ruy-78csu'			
 		});
+
 
 
 
@@ -164,16 +165,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 		map.on('click', 'SA_stories', function(e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
-			var name = e.features[0].properties.Name_display;
-			var suburb = e.features[0].properties.suburb;
+			var name = e.features[0].properties.Name_display.concat(",  ");
+			var suburb = e.features[0].properties.Suburb;
 			var story = e.features[0].properties.Written_story;
 			var topic = e.features[0].properties.display_topic;
 			var image_url = e.features[0].properties.Image;
 			var key_issue = "Key Issues";
+
 			
 			$('#story').text(e.features[0].properties.Written_story);
-			$('#suburb').text(e.features[0].properties.suburb);
-			$('#name').text(e.features[0].properties.Name_display);
+			$('#suburb').text(e.features[0].properties.Suburb);
+			$('#name').text(name);
 			$('#topic').text(e.features[0].properties.display_topic);
 			$('#image').html(image_url);
 			$('#key_issue').text(key_issue);
