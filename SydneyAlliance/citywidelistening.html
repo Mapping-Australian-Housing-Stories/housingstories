@@ -78,7 +78,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="jumbotron p-0 mb-0 bg-transparent">
 <div class="container-fluid">
 	<div class="row" style="height: 100%">
-		<div class="col-lg-9 mr-lg-n5 pr-0" style="min-height: 60%" >
+		<div class="col-lg-9 mr-lg-n5 pr-0" style="min-height: 40%" >
 			<div id='map'></div>
 
 			
@@ -86,9 +86,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</div>
 		
 		<div class="col ml-lg-n5 side-panel" style="height:100%; overflow: auto;">
-			<img class="display-4 pt-3" style="max-width: 100%; max-height: 102px; margin-left: -21px;" src="SA_logo.png">
-			<h1 class="display-4 pt-3">Citywide Listening Map</h1>
-			<p class="lead" style="font-size: 1.1rem;">Click on a coloured dot to reveal a personal story about the issues deeply felt and impacting community across Sydney.</p>
+			<a href="https://www.sydneyalliance.org.au/"><img class="display-4 pt-3" style="max-width: 100%; max-height: 102px; margin-left: -21px;" src="SA_logo.png"></a>
+			<h1 class="display-4 pt-3">CityWide Storymap</h1>
+			<p class="lead" >Click on a coloured dot to reveal a personal story about the issues deeply felt and impacting community across Sydney.</p>
+			<p class="text-muted">If you would like to share your story about issues impact you in Sydney, <a href="https://sydney.au1.qualtrics.com/jfe/form/SV_07cJxNceBsUt5nE" class="text-dark">you can submit your story here.</a></p>
 			<p><small class="text-muted font-italic">Note: all points are accurate to suburb level. Actual locations have been radomised to protect people's identity</small></p>
 			
 			<h1><div class="d-inline-block font-italic" id="name"></div> <div class="d-inline-block" id="suburb"></div></h1>
@@ -111,9 +112,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			style: 'mapbox://styles/mapbox/light-v10',
 			center: [151.04, -33.9],
 			zoom: 8.8,
-			maxZoom: 13,
+			maxZoom: 12,
 			//scrollZoom: false,
-			customAttribution: "map by Sydney Alliance"
+			customAttribution: 'map by <a href="https://www.sydneyalliance.org.au/">Sydney Alliance</a>'
 		});		
 
 		map.on('load', function() {
